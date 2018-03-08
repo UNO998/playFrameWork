@@ -7,6 +7,9 @@
 - [Play Framework](https://www.playframework.com/)
 - Java 8
 - [Twitter API](https://developer.twitter.com)
+- Test tool
+  - Junit 5
+  - Jacoco
 
 ## Project guidelines
 - Based on **Play FrameWork** 
