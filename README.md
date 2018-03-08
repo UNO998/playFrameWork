@@ -10,6 +10,7 @@
 - Test tool
   - Junit 5
   - Jacoco
+  - Jenkins
 
 ## Project guidelines
 - Based on **Play FrameWork** 
