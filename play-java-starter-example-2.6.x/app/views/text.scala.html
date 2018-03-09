@@ -1,0 +1,20 @@
+@(texts : List[String])
+<html>
+    <header>
+        <title>
+            All texts
+        </title>
+    </header>
+    <body>
+        <h1>
+            All texts
+        </h1>
+
+        @for(text <- texts) {
+            <p>
+                text: @text
+    </p>
+        }
+
+    </body>
+</html>
