@@ -1,4 +1,7 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/views/searchPage.scala.html:14:52: value getPersonalTweet is not a member of controllers.ReverseTweetSearchController[0m
-[0m[[0m[31merror[0m] [0m[0m            <a href="@routes.TweetSearchController.getPersonalTweet(tweet.getUser_id)">[0m
-[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/views/welcome.scala.html:81:49: value AsyncController is not a member of object controllers.routes[0m
+[0m[[0m[31merror[0m] [0m[0m                <a href="@routes.AsyncController.message">Click here for the AsyncController action!</a>[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/views/welcome.scala.html:95:49: value CountController is not a member of object controllers.routes[0m
+[0m[[0m[31merror[0m] [0m[0m                <a href="@routes.CountController.count">Click here for the CountController action!</a>[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

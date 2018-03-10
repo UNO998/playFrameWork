@@ -2,20 +2,24 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
-# An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET     /message                    controllers.AsyncController.message
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-#
-GET     /searchPage                 controllers.TweetSearchController.searchByKeyWord(keyWord: String)
+# get keyWord from searchPage form and pass to TweetSearchController
+GET     /searchPage                 controllers.TweetSearchController.searchByKeyWord(keyWord: String ?= "hello")
 
-GET     /personalTweetPage          controllers.TweetSearchController.getPersonalTweet(id: Long)
+# get #user_id from user click and route to TweetSearchController
+GET     /personalTweetPage          controllers.TweetSearchController.getPersonalTweet(id: Long )
+
+
+
+
+# An example controller showing a sample home page
+#GET     /                           controllers.HomeController.index
+# An example controller showing how to use dependency injection
+#GET     /count                      controllers.CountController.count
+# An example controller showing how to write asynchronous code
+#GET     /message                    controllers.AsyncController.message
 
 # practice routes
 # name will pass as parameter to index2
