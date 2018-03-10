@@ -24,13 +24,19 @@ import play.core.j.PlayFormsMagicForJava._
 
 object personalPage extends _root_.play.twirl.api.BaseScalaTemplate[play.twirl.api.HtmlFormat.Appendable,_root_.play.twirl.api.Format[play.twirl.api.HtmlFormat.Appendable]](play.twirl.api.HtmlFormat) with _root_.play.twirl.api.Template0[play.twirl.api.HtmlFormat.Appendable] {
 
-  /**/
+  /*
+@main("@userInfo.getUserName Tweet") {
+    <h1>@userInfo.getUserName()</h1>
+}
+*/
   def apply():play.twirl.api.HtmlFormat.Appendable = {
     _display_ {
       {
 
 
-Seq[Any]()
+Seq[Any](_display_(/*9.2*/main("Personal Page")/*9.23*/ {_display_(Seq[Any](format.raw/*9.25*/("""
+
+""")))}))
       }
     }
   }
@@ -46,11 +52,11 @@ Seq[Any]()
 
               /*
                   -- GENERATED --
-                  DATE: Fri Mar 09 21:31:54 EST 2018
-                  SOURCE: /Users/uno/GitHub/playFrameWork/app/views/personalPage.scala.html
-                  HASH: 282da6d6fc3be5f18bafd4f3e6904d0c508db341
-                  MATRIX: 
-                  LINES: 
+                  DATE: Fri Mar 09 21:57:08 EST 2018
+                  SOURCE: /Users/uno/GitHub/playFrameWork/app/views/personalTweetPage.scala.html
+                  HASH: f854bdc47963f4b4665fa537fec40476e1407a3f
+                  MATRIX: 1116->112|1145->133|1184->135
+                  LINES: 37->9|37->9|37->9
                   -- GENERATED --
               */
           

@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/uno/GitHub/playFrameWork/conf/routes
-// @DATE:Fri Mar 09 21:33:52 EST 2018
+// @DATE:Fri Mar 09 22:37:14 EST 2018
 
 package router
 
@@ -23,7 +23,7 @@ class Routes(
   // @LINE:13
   Assets_4: controllers.Assets,
   // @LINE:16
-  SearchController_0: controllers.SearchController,
+  TweetSearchController_0: controllers.TweetSearchController,
   val prefix: String
 ) extends GeneratedRouter {
 
@@ -38,12 +38,12 @@ class Routes(
     // @LINE:13
     Assets_4: controllers.Assets,
     // @LINE:16
-    SearchController_0: controllers.SearchController
-  ) = this(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, SearchController_0, "/")
+    TweetSearchController_0: controllers.TweetSearchController
+  ) = this(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, TweetSearchController_0, "/")
 
   def withPrefix(prefix: String): Routes = {
     router.RoutesPrefix.setPrefix(prefix)
-    new Routes(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, SearchController_0, prefix)
+    new Routes(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, TweetSearchController_0, prefix)
   }
 
   private[this] val defaultPrefix: String = {
@@ -55,7 +55,8 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """count""", """controllers.CountController.count"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """message""", """controllers.AsyncController.message"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """searchPage""", """controllers.SearchController.searchByKeyWord(keyWord:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """searchPage""", """controllers.TweetSearchController.searchByKeyWord(keyWord:String)"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """personalTweetPage""", """controllers.TweetSearchController.getPersonalTweet(id:Long)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -136,18 +137,36 @@ class Routes(
   )
 
   // @LINE:16
-  private[this] lazy val controllers_SearchController_searchByKeyWord4_route = Route("GET",
+  private[this] lazy val controllers_TweetSearchController_searchByKeyWord4_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("searchPage")))
   )
-  private[this] lazy val controllers_SearchController_searchByKeyWord4_invoker = createInvoker(
-    SearchController_0.searchByKeyWord(fakeValue[String]),
+  private[this] lazy val controllers_TweetSearchController_searchByKeyWord4_invoker = createInvoker(
+    TweetSearchController_0.searchByKeyWord(fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
-      "controllers.SearchController",
+      "controllers.TweetSearchController",
       "searchByKeyWord",
       Seq(classOf[String]),
       "GET",
       this.prefix + """searchPage""",
+      """""",
+      Seq()
+    )
+  )
+
+  // @LINE:18
+  private[this] lazy val controllers_TweetSearchController_getPersonalTweet5_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("personalTweetPage")))
+  )
+  private[this] lazy val controllers_TweetSearchController_getPersonalTweet5_invoker = createInvoker(
+    TweetSearchController_0.getPersonalTweet(fakeValue[Long]),
+    play.api.routing.HandlerDef(this.getClass.getClassLoader,
+      "router",
+      "controllers.TweetSearchController",
+      "getPersonalTweet",
+      Seq(classOf[Long]),
+      "GET",
+      this.prefix + """personalTweetPage""",
       """""",
       Seq()
     )
@@ -181,9 +200,15 @@ class Routes(
       }
   
     // @LINE:16
-    case controllers_SearchController_searchByKeyWord4_route(params@_) =>
+    case controllers_TweetSearchController_searchByKeyWord4_route(params@_) =>
       call(params.fromQuery[String]("keyWord", None)) { (keyWord) =>
-        controllers_SearchController_searchByKeyWord4_invoker.call(SearchController_0.searchByKeyWord(keyWord))
+        controllers_TweetSearchController_searchByKeyWord4_invoker.call(TweetSearchController_0.searchByKeyWord(keyWord))
+      }
+  
+    // @LINE:18
+    case controllers_TweetSearchController_getPersonalTweet5_route(params@_) =>
+      call(params.fromQuery[Long]("id", None)) { (id) =>
+        controllers_TweetSearchController_getPersonalTweet5_invoker.call(TweetSearchController_0.getPersonalTweet(id))
       }
   }
 }

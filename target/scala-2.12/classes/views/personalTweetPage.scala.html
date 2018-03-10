@@ -1,0 +1,12 @@
+@*(userInfo: UserInfo)*@
+@*
+@main("@userInfo.getUserName Tweet") {
+    <h1>@userInfo.getUserName()</h1>
+}
+*@
+
+@* TEST *@
+@(id: Long)
+@main("Personal Page") {
+    <h1> User Info : @id</h1>
+}

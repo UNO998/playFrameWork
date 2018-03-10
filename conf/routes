@@ -13,9 +13,9 @@ GET     /message                    controllers.AsyncController.message
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 #
-GET     /searchPage        controllers.SearchController.searchByKeyWord(keyWord: String)
+GET     /searchPage                 controllers.TweetSearchController.searchByKeyWord(keyWord: String)
 
-
+GET     /personalTweetPage          controllers.TweetSearchController.getPersonalTweet(id: Long)
 
 # practice routes
 # name will pass as parameter to index2

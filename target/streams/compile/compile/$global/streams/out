@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/controllers/PracticeController.java:42:1: cannot find symbol[0m
-[0m[[0m[31merror[0m] [0m[0m  symbol:   variable PracticeController[0m
-[0m[[0m[31merror[0m] [0m[0m  location: class controllers.routes[0m
-[0m[[0m[31merror[0m] [0m[0m        return redirect(controllers.routes.PracticeController.index2(name+", " +age));[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/views/searchPage.scala.html:14:52: value getPersonalTweet is not a member of controllers.ReverseTweetSearchController[0m
+[0m[[0m[31merror[0m] [0m[0m            <a href="@routes.TweetSearchController.getPersonalTweet(tweet.getUser_id)">[0m
+[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

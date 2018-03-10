@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/uno/GitHub/playFrameWork/conf/routes
-// @DATE:Fri Mar 09 21:33:52 EST 2018
+// @DATE:Fri Mar 09 22:37:14 EST 2018
 
 import play.api.mvc.Call
 
@@ -72,7 +72,7 @@ package controllers {
   }
 
   // @LINE:16
-  class ReverseSearchController(_prefix: => String) {
+  class ReverseTweetSearchController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
@@ -82,6 +82,12 @@ package controllers {
     def searchByKeyWord(keyWord:String): Call = {
       
       Call("GET", _prefix + { _defaultPrefix } + "searchPage" + play.core.routing.queryString(List(Some(implicitly[play.api.mvc.QueryStringBindable[String]].unbind("keyWord", keyWord)))))
+    }
+  
+    // @LINE:18
+    def getPersonalTweet(id:Long): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "personalTweetPage" + play.core.routing.queryString(List(Some(implicitly[play.api.mvc.QueryStringBindable[Long]].unbind("id", id)))))
     }
   
   }

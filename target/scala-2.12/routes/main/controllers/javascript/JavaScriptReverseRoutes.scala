@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/uno/GitHub/playFrameWork/conf/routes
-// @DATE:Fri Mar 09 21:33:52 EST 2018
+// @DATE:Fri Mar 09 22:37:14 EST 2018
 
 import play.api.routing.JavaScriptReverseRoute
 
@@ -92,7 +92,7 @@ package controllers.javascript {
   }
 
   // @LINE:16
-  class ReverseSearchController(_prefix: => String) {
+  class ReverseTweetSearchController(_prefix: => String) {
 
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
@@ -101,10 +101,20 @@ package controllers.javascript {
   
     // @LINE:16
     def searchByKeyWord: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.SearchController.searchByKeyWord",
+      "controllers.TweetSearchController.searchByKeyWord",
       """
         function(keyWord0) {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "searchPage" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[String]].javascriptUnbind + """)("keyWord", keyWord0)])})
+        }
+      """
+    )
+  
+    // @LINE:18
+    def getPersonalTweet: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.TweetSearchController.getPersonalTweet",
+      """
+        function(id0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "personalTweetPage" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[Long]].javascriptUnbind + """)("id", id0)])})
         }
       """
     )
