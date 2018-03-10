@@ -13,14 +13,14 @@ GET     /message                    controllers.AsyncController.message
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 #
-GET     /searchTweet                controllers.SearchController.searchTweet
+GET     /searchPage        controllers.SearchController.searchByKeyWord(keyWord: String)
 
 
 
 # practice routes
 # name will pass as parameter to index2
 #Extract the page parameter from the path
-GET     /practice/index/:name             controllers.PracticeController.index2(name: String)
+#GET     /practice/index/:name             controllers.PracticeController.index2(name: String)
 
 # Extract the page parameter from the query String
 #Get     /practice                   controllers.PracticeController.index2(name: String)
@@ -28,4 +28,4 @@ GET     /practice/index/:name             controllers.PracticeController.index2(
 # redirect action to other action (From contorllers.PracticeController.index3 to index2)
 #GET     /practice/:name        controllers.PracticeController.index3(name: String, age=3)
 
-GET      /practice/index4       controllers.PracticeController.index4
+#GET      /practice/index4       controllers.PracticeController.index4

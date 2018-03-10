@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/views/practice.scala.html:23:17: '(' expected but ')' found.[0m
-[0m[[0m[31merror[0m] [0m[0m            @for (order <- orders) {[0m
-[0m[[0m[31merror[0m] [0m[0m                ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/views/practice.scala.html:29:12: illegal start of simple expression[0m
-[0m[[0m[31merror[0m] [0m[0m    </html>[0m
-[0m[[0m[31merror[0m] [0m[0m           ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/uno/GitHub/playFrameWork/app/controllers/PracticeController.java:42:1: cannot find symbol[0m
+[0m[[0m[31merror[0m] [0m[0m  symbol:   variable PracticeController[0m
+[0m[[0m[31merror[0m] [0m[0m  location: class controllers.routes[0m
+[0m[[0m[31merror[0m] [0m[0m        return redirect(controllers.routes.PracticeController.index2(name+", " +age));[0m

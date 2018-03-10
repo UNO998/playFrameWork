@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/uno/GitHub/playFrameWork/conf/routes
-// @DATE:Fri Mar 09 15:11:28 EST 2018
+// @DATE:Fri Mar 09 21:33:52 EST 2018
 
 import play.api.mvc.Call
 
@@ -71,27 +71,6 @@ package controllers {
   
   }
 
-  // @LINE:23
-  class ReversePracticeController(_prefix: => String) {
-    def _defaultPrefix: String = {
-      if (_prefix.endsWith("/")) "" else "/"
-    }
-
-  
-    // @LINE:31
-    def index4(): Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "practice/index4")
-    }
-  
-    // @LINE:23
-    def index2(name:String): Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "practice/index/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("name", name)))
-    }
-  
-  }
-
   // @LINE:16
   class ReverseSearchController(_prefix: => String) {
     def _defaultPrefix: String = {
@@ -100,9 +79,9 @@ package controllers {
 
   
     // @LINE:16
-    def searchTweet(): Call = {
+    def searchByKeyWord(keyWord:String): Call = {
       
-      Call("GET", _prefix + { _defaultPrefix } + "searchTweet")
+      Call("GET", _prefix + { _defaultPrefix } + "searchPage" + play.core.routing.queryString(List(Some(implicitly[play.api.mvc.QueryStringBindable[String]].unbind("keyWord", keyWord)))))
     }
   
   }

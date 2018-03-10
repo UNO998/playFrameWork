@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/uno/GitHub/playFrameWork/conf/routes
-// @DATE:Fri Mar 09 15:11:28 EST 2018
+// @DATE:Fri Mar 09 21:33:52 EST 2018
 
 package router
 
@@ -24,8 +24,6 @@ class Routes(
   Assets_4: controllers.Assets,
   // @LINE:16
   SearchController_0: controllers.SearchController,
-  // @LINE:23
-  PracticeController_5: controllers.PracticeController,
   val prefix: String
 ) extends GeneratedRouter {
 
@@ -40,14 +38,12 @@ class Routes(
     // @LINE:13
     Assets_4: controllers.Assets,
     // @LINE:16
-    SearchController_0: controllers.SearchController,
-    // @LINE:23
-    PracticeController_5: controllers.PracticeController
-  ) = this(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, SearchController_0, PracticeController_5, "/")
+    SearchController_0: controllers.SearchController
+  ) = this(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, SearchController_0, "/")
 
   def withPrefix(prefix: String): Routes = {
     router.RoutesPrefix.setPrefix(prefix)
-    new Routes(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, SearchController_0, PracticeController_5, prefix)
+    new Routes(errorHandler, HomeController_2, CountController_1, AsyncController_3, Assets_4, SearchController_0, prefix)
   }
 
   private[this] val defaultPrefix: String = {
@@ -59,9 +55,7 @@ class Routes(
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """count""", """controllers.CountController.count"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """message""", """controllers.AsyncController.message"""),
     ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """assets/""" + "$" + """file<.+>""", """controllers.Assets.versioned(path:String = "/public", file:Asset)"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """searchTweet""", """controllers.SearchController.searchTweet"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """practice/index/""" + "$" + """name<[^/]+>""", """controllers.PracticeController.index2(name:String)"""),
-    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """practice/index4""", """controllers.PracticeController.index4"""),
+    ("""GET""", this.prefix + (if(this.prefix.endsWith("/")) "" else "/") + """searchPage""", """controllers.SearchController.searchByKeyWord(keyWord:String)"""),
     Nil
   ).foldLeft(List.empty[(String,String,String)]) { (s,e) => e.asInstanceOf[Any] match {
     case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
@@ -142,56 +136,18 @@ class Routes(
   )
 
   // @LINE:16
-  private[this] lazy val controllers_SearchController_searchTweet4_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("searchTweet")))
+  private[this] lazy val controllers_SearchController_searchByKeyWord4_route = Route("GET",
+    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("searchPage")))
   )
-  private[this] lazy val controllers_SearchController_searchTweet4_invoker = createInvoker(
-    SearchController_0.searchTweet,
+  private[this] lazy val controllers_SearchController_searchByKeyWord4_invoker = createInvoker(
+    SearchController_0.searchByKeyWord(fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.SearchController",
-      "searchTweet",
-      Nil,
-      "GET",
-      this.prefix + """searchTweet""",
-      """""",
-      Seq()
-    )
-  )
-
-  // @LINE:23
-  private[this] lazy val controllers_PracticeController_index25_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("practice/index/"), DynamicPart("name", """[^/]+""",true)))
-  )
-  private[this] lazy val controllers_PracticeController_index25_invoker = createInvoker(
-    PracticeController_5.index2(fakeValue[String]),
-    play.api.routing.HandlerDef(this.getClass.getClassLoader,
-      "router",
-      "controllers.PracticeController",
-      "index2",
+      "searchByKeyWord",
       Seq(classOf[String]),
       "GET",
-      this.prefix + """practice/index/""" + "$" + """name<[^/]+>""",
-      """ practice routes
- name will pass as parameter to index2
-Extract the page parameter from the path""",
-      Seq()
-    )
-  )
-
-  // @LINE:31
-  private[this] lazy val controllers_PracticeController_index46_route = Route("GET",
-    PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("practice/index4")))
-  )
-  private[this] lazy val controllers_PracticeController_index46_invoker = createInvoker(
-    PracticeController_5.index4,
-    play.api.routing.HandlerDef(this.getClass.getClassLoader,
-      "router",
-      "controllers.PracticeController",
-      "index4",
-      Nil,
-      "GET",
-      this.prefix + """practice/index4""",
+      this.prefix + """searchPage""",
       """""",
       Seq()
     )
@@ -225,21 +181,9 @@ Extract the page parameter from the path""",
       }
   
     // @LINE:16
-    case controllers_SearchController_searchTweet4_route(params@_) =>
-      call { 
-        controllers_SearchController_searchTweet4_invoker.call(SearchController_0.searchTweet)
-      }
-  
-    // @LINE:23
-    case controllers_PracticeController_index25_route(params@_) =>
-      call(params.fromPath[String]("name", None)) { (name) =>
-        controllers_PracticeController_index25_invoker.call(PracticeController_5.index2(name))
-      }
-  
-    // @LINE:31
-    case controllers_PracticeController_index46_route(params@_) =>
-      call { 
-        controllers_PracticeController_index46_invoker.call(PracticeController_5.index4)
+    case controllers_SearchController_searchByKeyWord4_route(params@_) =>
+      call(params.fromQuery[String]("keyWord", None)) { (keyWord) =>
+        controllers_SearchController_searchByKeyWord4_invoker.call(SearchController_0.searchByKeyWord(keyWord))
       }
   }
 }

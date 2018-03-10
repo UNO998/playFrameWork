@@ -1,0 +1,20 @@
+@import services.TweetAPI.TweetResult
+@(keyWord: String)(tweetList: List[TweetResult])
+
+@main("Search Tweet") {
+
+    <form>
+        <input type="text" name="keyWord" formaction="searchPage" method="get">
+        <br>
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        @for(tweet <- tweetList) {
+            @*<a href="@routes.HomeController.index">*@
+            <a href="@routes.SearchController.">
+            <li>@tweet.getScreen_name</li>
+            </a>
+        }
+    </ul>
+}

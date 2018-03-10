@@ -4,7 +4,7 @@
 		module="playframework-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20180307225054"
+		publication="20180309204349"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>

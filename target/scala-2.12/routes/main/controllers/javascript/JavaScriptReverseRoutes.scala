@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/uno/GitHub/playFrameWork/conf/routes
-// @DATE:Fri Mar 09 15:11:28 EST 2018
+// @DATE:Fri Mar 09 21:33:52 EST 2018
 
 import play.api.routing.JavaScriptReverseRoute
 
@@ -91,36 +91,6 @@ package controllers.javascript {
   
   }
 
-  // @LINE:23
-  class ReversePracticeController(_prefix: => String) {
-
-    def _defaultPrefix: String = {
-      if (_prefix.endsWith("/")) "" else "/"
-    }
-
-  
-    // @LINE:31
-    def index4: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.PracticeController.index4",
-      """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "practice/index4"})
-        }
-      """
-    )
-  
-    // @LINE:23
-    def index2: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.PracticeController.index2",
-      """
-        function(name0) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "practice/index/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("name", name0))})
-        }
-      """
-    )
-  
-  }
-
   // @LINE:16
   class ReverseSearchController(_prefix: => String) {
 
@@ -130,11 +100,11 @@ package controllers.javascript {
 
   
     // @LINE:16
-    def searchTweet: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.SearchController.searchTweet",
+    def searchByKeyWord: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.SearchController.searchByKeyWord",
       """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "searchTweet"})
+        function(keyWord0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "searchPage" + _qS([(""" + implicitly[play.api.mvc.QueryStringBindable[String]].javascriptUnbind + """)("keyWord", keyWord0)])})
         }
       """
     )

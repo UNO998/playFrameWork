@@ -37,10 +37,10 @@ public class PracticeController extends Controller{
 
     }
 
-    //redirect to other action : index2
-    public Result index3(String name, int age) {
-        return redirect(controllers.routes.PracticeController.index2(name+", " +age));
-    }
+//    //redirect to other action : index2
+//    public Result index3(String name, int age) {
+//        return redirect(controllers.routes.PracticeController.index2(name+", " +age));
+//    }
 
 
     //action for rendering practice.scala.html
