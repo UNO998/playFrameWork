@@ -1,20 +1,23 @@
-@(texts : List[String])
-<html>
-    <header>
-        <title>
-            All texts
-        </title>
-    </header>
-    <body>
-        <h1>
-            All texts
-        </h1>
+@(texts : List[Actor] , twitter : Form[Twitter])
+@layout("All texts") {
+    @helper.form(action = routes.TwitterController.save()){
+        @helper.inputText(twitter("hashtag"))
+        <input type="submit" value="Create Book">
+    }
 
-        @for(text <- texts) {
-            <p>
-                text: @text
-    </p>
+    <div class="list-group">
+    @for(text <- texts) {
+        @defining(text.getUser) { user =>
+
+            <a href="@routes.TwitterController.userInfo(user.getId)" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@user.getName</h5>
+                </div>
+                <p class="mb-1">@text.getText</p>
+            </a>
         }
+    }
+    </div>
 
-    </body>
-</html>
+}
+

@@ -2,7 +2,12 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import play.Logger;
+import models.Actor;
+import models.Twitter;
+import models.User;
+import play.data.Form;
+import play.data.FormFactory;
+import play.libs.concurrent.HttpExecutionContext;
 import play.libs.oauth.OAuth;
 import play.libs.oauth.OAuth.ConsumerKey;
 import play.libs.oauth.OAuth.OAuthCalculator;
@@ -12,18 +17,21 @@ import play.libs.ws.WSClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.text;
-
 import com.google.common.base.Strings;
+import views.html.user;
 
 import javax.inject.Inject;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+
 public class TwitterController extends Controller {
+    private HttpExecutionContext httpExecutionContext;
+
+
+    @Inject
+    FormFactory formFactory;
 
     static final ConsumerKey KEY = new ConsumerKey("M0YLKTvUOn94ppgkndCtNOzg8", "SLyd4eDSj7gQf9go2VVzTU1WQ8fxD78nngbDeUGF1z3h74Feak");
 
@@ -34,37 +42,90 @@ public class TwitterController extends Controller {
                     KEY);
 
     private static final OAuth TWITTER = new OAuth(SERVICE_INFO);
-
     private final WSClient ws;
-
-    private String strUrl = "https://api.twitter.com/1.1/search/tweets.json?q=%20new";
-
-    List<String> descriptions = new LinkedList<>();
-
+    private String hashtag = "";
+    private String strUrl = "https://api.twitter.com/1.1/search/tweets.json?q=%20";
+    List<Actor> actors = new LinkedList<>();
+    Map<String, User> users = new HashMap<>();
     @Inject
-    public TwitterController(WSClient ws) {
+    public TwitterController(WSClient ws, HttpExecutionContext ec) {
         this.ws = ws;
+        this.httpExecutionContext = ec;
+    }
+
+
+    public Result save(){
+        Form<Twitter> TitterForm = formFactory.form(Twitter.class).bindFromRequest();
+        Twitter twitter = TitterForm.get();
+        this.hashtag = twitter.hashtag;
+        return redirect(routes.TwitterController.homeTimeline());
+    }
+
+    public Result getPage() throws Exception{
+        Form<Twitter> twitterForm = formFactory.form(Twitter.class);
+        if (this.hashtag.length() == 0) {
+            return ok(text.render(actors, twitterForm));
+        }else return homeTimeline().toCompletableFuture().get();
+    }
+
+    public CompletionStage<Result> userInfo(String id) {
+        List<String> texts = new LinkedList<>();
+        Optional<RequestToken> sessionTokenPair = getSessionTokenPair();
+        if (sessionTokenPair.isPresent()) {
+            return ws.url("https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=" + id + "&count=10")
+                    .sign(new OAuthCalculator(TwitterController.KEY, sessionTokenPair.get()))
+                    .get()
+                    .thenApply(result -> {
+                                JsonNode json = result.asJson();
+                                ArrayNode arr = (ArrayNode)json;
+                                Iterator<JsonNode> it = arr.iterator();
+                                while (it.hasNext()) {
+                                    JsonNode next = it.next();
+                                    texts.add(next.findPath("text").asText());
+                                }
+                                users.get(id).setTexts(texts);
+                                return ok(user.render(users.get(id)));
+                            }
+                    );
+        }
+        return CompletableFuture.completedFuture(redirect(routes.TwitterController.auth()));
     }
 
 
     public CompletionStage<Result> homeTimeline() {
-        Logger.info(strUrl);
-        strUrl += "";
+        Form<Twitter> twitterForm = formFactory.form(Twitter.class);
+        String url = strUrl + this.hashtag;
         Optional<RequestToken> sessionTokenPair = getSessionTokenPair();
         if (sessionTokenPair.isPresent()) {
-            return ws.url(strUrl)
+            return ws.url(url)
                     .sign(new OAuthCalculator(TwitterController.KEY, sessionTokenPair.get()))
                     .get()
-                    .thenApply(result -> {JsonNode json = result.asJson();
+                    .thenApplyAsync(result -> {
+                        JsonNode json = result.asJson();
                         JsonNode node = json.findPath("statuses");
                         ArrayNode arr = (ArrayNode)node;
                         Iterator<JsonNode> it = arr.iterator();
                         while (it.hasNext()) {
                             JsonNode next = it.next();
-                            descriptions.add(next.findPath("text").asText());
+                            JsonNode user = next.findPath("user");
+                            String user_id = user.findPath("id").asText();
+                            if (users.get(user_id) == null) {
+                                users.put(user_id,
+                                        new User(user_id,
+                                                user.findPath("name").asText(),
+                                                user.findPath("screen_name").asText(),
+                                                user.findPath("description").asText(),
+                                                user.findPath("profile_image_url_https").asText(),
+                                                user.findPath("followers_count").asInt(),
+                                                user.findPath("listed_count").asInt(),
+                                                user.findPath("friends_count").asInt(),
+                                                user.findPath("created_at").asText()));
+                            }
+                            actors.add(new Actor(next.findPath("text").asText(), users.get(user_id)));
                         }
-                        return ok(text.render(descriptions));
-                    });
+                        this.hashtag = "";
+                        return ok(text.render(actors, twitterForm));
+                    }, httpExecutionContext.current());
         }
         return CompletableFuture.completedFuture(redirect(routes.TwitterController.auth()));
     }
