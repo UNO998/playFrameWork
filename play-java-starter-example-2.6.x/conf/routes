@@ -15,3 +15,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET     /twitter/homeTimeline       controllers.TwitterController.homeTimeline()
 GET     /twitter/auth               controllers.TwitterController.auth()
+GET     /twitter/save               controllers.TwitterController.save()
+GET     /twitter/getPage            controllers.TwitterController.getPage()
+GET     /twitter/getPage/:id        controllers.TwitterController.userInfo(id : String)
+
