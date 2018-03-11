@@ -1,0 +1,21 @@
+@(twitters : List[WordTwitter])
+
+<html>
+    <head>
+        <title>All tweets</title>
+    </head>
+<body>
+    <h1>tweets  List</h1>
+
+    @for(tweet <- twitters){
+        <div style="font-size: 5px">
+            <p>name:<a href="@routes.Twitter.userTimeLine(tweet.id)">@tweet.name (@tweet.id)</a></p>
+            <p>text: @tweet.text</p>
+            <br>
+        </div>
+    }
+
+    <a href="@routes.Twitter.search()">Search</a>
+
+</body>
+</html>
