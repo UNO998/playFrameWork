@@ -13,8 +13,9 @@ GET     /message                    controllers.AsyncController.message
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 
+GET     /twitter/homeTimeline       controllers.TwitterController.homeTimeline()
 GET     /twitter/auth               controllers.TwitterController.auth()
 GET     /twitter/save               controllers.TwitterController.save()
 GET     /twitter/getPage            controllers.TwitterController.getPage()
 GET     /twitter/getPage/:id        controllers.TwitterController.userInfo(id : String)
-GET     /twitter/refresh            controllers.TwitterController.refresh()
+
