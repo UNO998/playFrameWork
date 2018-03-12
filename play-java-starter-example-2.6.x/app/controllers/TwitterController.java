@@ -53,12 +53,18 @@ public class TwitterController extends Controller {
         this.httpExecutionContext = ec;
     }
 
+    public Result refresh() {
+        this.hashtag = "";
+        actors = new LinkedList<Actor>();
+        return redirect(routes.TwitterController.getPage());
+    }
+
 
     public Result save(){
         Form<Twitter> TitterForm = formFactory.form(Twitter.class).bindFromRequest();
         Twitter twitter = TitterForm.get();
         this.hashtag = twitter.hashtag;
-        return redirect(routes.TwitterController.homeTimeline());
+        return redirect(routes.TwitterController.getPage());
     }
 
     public Result getPage() throws Exception{
@@ -142,7 +148,7 @@ public class TwitterController extends Controller {
             RequestToken accessToken = TWITTER.retrieveAccessToken(requestToken, verifier);
             saveSessionTokenPair(accessToken);
 
-            return redirect(routes.TwitterController.homeTimeline());
+            return redirect(routes.TwitterController.getPage());
         }
     }
 
