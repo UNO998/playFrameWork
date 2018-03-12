@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 
 public class TwitterController extends Controller {
@@ -53,12 +54,18 @@ public class TwitterController extends Controller {
         this.httpExecutionContext = ec;
     }
 
+    public Result refresh() {
+        this.hashtag = "";
+        actors.clear();
+        return redirect(routes.TwitterController.getPage());
+    }
+
 
     public Result save(){
         Form<Twitter> TitterForm = formFactory.form(Twitter.class).bindFromRequest();
         Twitter twitter = TitterForm.get();
         this.hashtag = twitter.hashtag;
-        return redirect(routes.TwitterController.homeTimeline());
+        return redirect(routes.TwitterController.getPage());
     }
 
     public Result getPage() throws Exception{
@@ -105,6 +112,7 @@ public class TwitterController extends Controller {
                         JsonNode node = json.findPath("statuses");
                         ArrayNode arr = (ArrayNode)node;
                         Iterator<JsonNode> it = arr.iterator();
+                        List<Actor> tempActor = new LinkedList<>();
                         while (it.hasNext()) {
                             JsonNode next = it.next();
                             JsonNode user = next.findPath("user");
@@ -121,8 +129,9 @@ public class TwitterController extends Controller {
                                                 user.findPath("friends_count").asInt(),
                                                 user.findPath("created_at").asText()));
                             }
-                            actors.add(new Actor(next.findPath("text").asText(), users.get(user_id)));
+                            tempActor.add(new Actor(next.findPath("text").asText(), users.get(user_id)));
                         }
+                        actors.addAll(tempActor.stream().limit(10).collect(Collectors.toList()));
                         this.hashtag = "";
                         return ok(text.render(actors, twitterForm));
                     }, httpExecutionContext.current());
@@ -142,7 +151,7 @@ public class TwitterController extends Controller {
             RequestToken accessToken = TWITTER.retrieveAccessToken(requestToken, verifier);
             saveSessionTokenPair(accessToken);
 
-            return redirect(routes.TwitterController.homeTimeline());
+            return redirect(routes.TwitterController.getPage());
         }
     }
 
