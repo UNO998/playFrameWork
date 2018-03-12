@@ -29,16 +29,18 @@
 
 
     <div class="list-group">
-    @for(text <- texts) {
+    @for((text, index)<- texts.zipWithIndex) {
+
         @defining(text.getUser) { user =>
 
-            <a href="@routes.TwitterController.userInfo(user.getId)" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div  class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">@user.getName</h5>
+                    <a href="@routes.TwitterController.userInfo(user.getId)" class="mb-1">@user.getName</a>
                 </div>
-                <p class="mb-1">@text.getText</p>
-            </a>
+                <p class="mb-1"> @{index + 1} @text.getText</p>
+            </div>
         }
+
     }
     </div>
 
