@@ -19,17 +19,14 @@ import play.mvc.Result;
 import views.html.text;
 import com.google.common.base.Strings;
 import views.html.user;
-
 import javax.inject.Inject;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 
-
 public class TwitterController extends Controller {
     private HttpExecutionContext httpExecutionContext;
-
 
     @Inject
     FormFactory formFactory;
@@ -85,11 +82,9 @@ public class TwitterController extends Controller {
                     .thenApply(result -> {
                                 JsonNode json = result.asJson();
                                 ArrayNode arr = (ArrayNode)json;
-                                Iterator<JsonNode> it = arr.iterator();
-                                while (it.hasNext()) {
-                                    JsonNode next = it.next();
-                                    texts.add(next.findPath("text").asText());
-                                }
+                                arr.forEach(jsonNode -> {
+                                    texts.add(jsonNode.findPath("text").asText());
+                                });
                                 users.get(id).setTexts(texts);
                                 return ok(user.render(users.get(id)));
                             }
@@ -97,7 +92,6 @@ public class TwitterController extends Controller {
         }
         return CompletableFuture.completedFuture(redirect(routes.TwitterController.auth()));
     }
-
 
     public CompletionStage<Result> homeTimeline() {
         Form<Twitter> twitterForm = formFactory.form(Twitter.class);
@@ -110,12 +104,10 @@ public class TwitterController extends Controller {
                     .thenApplyAsync(result -> {
                         JsonNode json = result.asJson();
                         JsonNode node = json.findPath("statuses");
-                        ArrayNode arr = (ArrayNode)node;
-                        Iterator<JsonNode> it = arr.iterator();
                         List<Actor> tempActor = new LinkedList<>();
-                        while (it.hasNext()) {
-                            JsonNode next = it.next();
-                            JsonNode user = next.findPath("user");
+                        ArrayNode arr = (ArrayNode)node;
+                        arr.forEach(jsonNode -> {
+                            JsonNode user = jsonNode.findPath("user");
                             String user_id = user.findPath("id").asText();
                             if (users.get(user_id) == null) {
                                 users.put(user_id,
@@ -129,8 +121,8 @@ public class TwitterController extends Controller {
                                                 user.findPath("friends_count").asInt(),
                                                 user.findPath("created_at").asText()));
                             }
-                            tempActor.add(new Actor(next.findPath("text").asText(), users.get(user_id)));
-                        }
+                            tempActor.add(new Actor(jsonNode.findPath("text").asText(), users.get(user_id)));
+                        });
                         actors.addAll(tempActor.stream().limit(10).collect(Collectors.toList()));
                         this.hashtag = "";
                         return ok(text.render(actors, twitterForm));
