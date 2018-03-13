@@ -1,32 +1,15 @@
 import akka.actor.ActorSystem;
 import controllers.AsyncController;
 import controllers.CountController;
-import controllers.TwitterController;
 import org.junit.Test;
-import play.libs.concurrent.HttpExecutionContext;
-import play.libs.ws.WSClient;
-import play.libs.ws.WSRequest;
 import play.mvc.Result;
 import scala.concurrent.ExecutionContextExecutor;
 
-import java.io.IOException;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.Executor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static play.test.Helpers.contentAsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.*;
-
-import org.junit.Test;
-
-import play.mvc.Result;
-import play.twirl.api.Content;
-
-import javax.xml.ws.http.HTTPException;
 
 /**
  * Unit testing does not require Play application start up.
@@ -69,14 +52,13 @@ public class UnitTest {
         }
     }
 
-    //Test refresh
-    @Test
-    public void testIndex() {
-        Result result = new TwitterController().refresh();
-        assertEquals(OK, result.status());
-        assertEquals("text/html", result.contentType().get());
-        assertEquals("utf-8", result.charset().get());
-        assertTrue(contentAsString(result).contains("Welcome"));
-    }
-
+//    //Test refresh
+//    @Test
+//    public void testIndex() {
+//        Result result = new TwitterController().refresh();
+//        assertEquals(OK, result.status());
+//        assertEquals("text/html", result.contentType().get());
+//        assertEquals("utf-8", result.charset().get());
+//        assertTrue(contentAsString(result).contains("Welcome"));
+//    }
 }

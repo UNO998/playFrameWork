@@ -1,27 +1,22 @@
-import com.fasterxml.jackson.databind.JsonNode;
 import models.Actor;
 import models.Twitter;
 import models.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.annotation.Configuration;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.data.FormFactory;
-import play.test.WithApplication;
 import play.test.WithBrowser;
 import play.twirl.api.Content;
 import play.twirl.api.Html;
 
 import javax.inject.Inject;
-import javax.swing.text.html.HTMLDocument;
 import javax.xml.bind.Binder;
 import java.util.List;
 
-import static com.oracle.jrockit.jfr.Transition.From;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static play.test.Helpers.contentAsString;
-import static org.mockito.Mockito.*;
 
 public class TemplatesTest extends WithBrowser {
     @Inject

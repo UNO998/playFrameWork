@@ -42,23 +42,15 @@ public class TwitterController extends Controller {
                     KEY);
 
     private static final OAuth TWITTER = new OAuth(SERVICE_INFO);
-    private WSClient ws;
+    private final WSClient ws;
     private String hashtag = "";
     private String strUrl = "https://api.twitter.com/1.1/search/tweets.json?q=%20";
     List<Actor> actors = new LinkedList<>();
     Map<String, User> users = new HashMap<>();
-
-    public TwitterController(){}
     @Inject
     public TwitterController(WSClient ws, HttpExecutionContext ec) {
         this.ws = ws;
         this.httpExecutionContext = ec;
-    }
-
-    public Result refresh() {
-        this.hashtag = "";
-        actors = new LinkedList<Actor>();
-        return redirect(routes.TwitterController.getPage());
     }
 
 
@@ -66,7 +58,7 @@ public class TwitterController extends Controller {
         Form<Twitter> TitterForm = formFactory.form(Twitter.class).bindFromRequest();
         Twitter twitter = TitterForm.get();
         this.hashtag = twitter.hashtag;
-        return redirect(routes.TwitterController.getPage());
+        return redirect(routes.TwitterController.homeTimeline());
     }
 
     public Result getPage() throws Exception{
@@ -150,7 +142,7 @@ public class TwitterController extends Controller {
             RequestToken accessToken = TWITTER.retrieveAccessToken(requestToken, verifier);
             saveSessionTokenPair(accessToken);
 
-            return redirect(routes.TwitterController.getPage());
+            return redirect(routes.TwitterController.homeTimeline());
         }
     }
 

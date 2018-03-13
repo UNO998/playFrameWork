@@ -1,28 +1,6 @@
-import controllers.TwitterController;
-import controllers.routes;
 import models.Actor;
 import models.Twitter;
 import models.User;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static play.mvc.Http.Status.BAD_REQUEST;
-import static play.mvc.Http.Status.NOT_FOUND;
-import static play.mvc.Http.Status.OK;
-
-import static play.mvc.Results.redirect;
-import static play.test.Helpers.contentAsString;
-import static play.test.Helpers.fakeApplication;
-import static play.test.Helpers.fakeRequest;
-import static play.test.Helpers.inMemoryDatabase;
-import static play.test.Helpers.start;
-import static play.test.Helpers.stop;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import play.data.Form;
@@ -31,9 +9,16 @@ import play.libs.concurrent.HttpExecutionContext;
 import play.libs.oauth.OAuth;
 import play.libs.ws.WSClient;
 import play.mvc.Result;
-import views.html.text;
 
 import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static play.mvc.Http.Status.OK;
+import static play.mvc.Results.redirect;
 
 
 public class ControllerTest {
@@ -60,15 +45,6 @@ public class ControllerTest {
 
     @Before
     public void startApp() {
-    }
-
-    //Test refresh
-    @Test
-    public void testRefresh() {
-        Result result = new TwitterController(ws, httpExecutionContext).refresh();
-        assertEquals(OK, result.status());
-        assertEquals("text/plain", result.contentType().get());
-        assertEquals("utf-8", result.charset().get());
     }
 
     //Test save
