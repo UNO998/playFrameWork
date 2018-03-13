@@ -36,3 +36,7 @@ javaOptions in Test ++= Seq(
   "-XX:MaxPermSize=384M"
 )
 
+libraryDependencies += "junit" % "junit" % "4.12" % "test"
+libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+libraryDependencies += "org.mockito" % "mockito-core" % "2.10.0" % "test"
