@@ -14,6 +14,8 @@ libraryDependencies += "javax.xml.bind" % "jaxb-api" % "2.1"
 
 libraryDependencies += ws
 
+libraryDependencies += "org.mockito" % "mockito-core" % "2.15.0" % "test"
+
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 
