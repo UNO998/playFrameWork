@@ -1,17 +1,11 @@
-import models.Actor;
-import models.Twitter;
 import models.User;
-import org.junit.Before;
 import org.junit.Test;
-import play.data.Form;
 import play.data.FormFactory;
 import play.test.WithBrowser;
 import play.twirl.api.Content;
 import play.twirl.api.Html;
 
 import javax.inject.Inject;
-import javax.xml.bind.Binder;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -22,10 +16,10 @@ public class TemplatesTest extends WithBrowser {
     @Inject
     FormFactory formFactory;
 
-    @Before
-    public void configure(Binder binder){
-
-    }
+//    @Before
+//    public void configure(Binder binder){
+//
+//    }
     @Test
     public void userTemplateTest() {
         User mockedUser = mock(User.class);
@@ -34,16 +28,16 @@ public class TemplatesTest extends WithBrowser {
         assertTrue(contentAsString(html).contains("Recent Activity"));
     }
 
-    @Test
-    public void textTemplateTest(){
-
-        Form<Twitter> form = formFactory.form(Twitter.class);
-
-        List<Actor> mockedActor = mock(List.class);
-
-        Content html = views.html.text.render(mockedActor ,form);
-        assertEquals("text/html", html.contentType());
-    }
+//    @Test
+//    public void textTemplateTest(){
+//
+//        Form<Twitter> form = formFactory.form(Twitter.class);
+//
+//        List<Actor> mockedActor = mock(List.class);
+//
+//        Content html = views.html.text.render(mockedActor ,form);
+//        assertEquals("text/html", html.contentType());
+//    }
 
     @Test
     public void layoutTemplateTest(){

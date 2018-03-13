@@ -1,4 +1,3 @@
-import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
@@ -8,8 +7,6 @@ import play.test.Helpers;
 import play.test.WithApplication;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static play.mvc.Http.Status.OK;
 import static play.test.Helpers.*;
 
 public class TwitterControllerTest extends WithApplication {
@@ -19,51 +16,51 @@ public class TwitterControllerTest extends WithApplication {
         return new GuiceApplicationBuilder().build();
     }
 
-    @Test
-    public void testGetPage() {
-        Http.RequestBuilder request = Helpers.fakeRequest()
-                .method(GET)
-                .uri("/twitter/getPage");
+//    @Test
+//    public void testGetPage() {
+//        Http.RequestBuilder request = Helpers.fakeRequest()
+//                .method(GET)
+//                .uri("/twitter/getPage");
+//
+//
+//        Result result = route(app, request);
+//
+//
+//        assertEquals(OK, result.status());
+//        assertTrue(Helpers.contentAsString(result).contains("Home"));
+//        assertTrue(Helpers.contentAsString(result).contains("Refresh"));
+//        //assertTrue(Helpers.contentAsString(result).contains("Search"));
+//
+//    }
 
 
-        Result result = route(app, request);
+//    @Test
+//    public void testRefresh() {
+//        Http.RequestBuilder request = Helpers.fakeRequest()
+//                .method(GET)
+//                .uri("/twitter/refresh");
+//        Result result = route(app, request);
+//        assertEquals(SEE_OTHER, result.status());
+//    }
 
 
-        assertEquals(OK, result.status());
-        assertTrue(Helpers.contentAsString(result).contains("Home"));
-        assertTrue(Helpers.contentAsString(result).contains("Refresh"));
-        //assertTrue(Helpers.contentAsString(result).contains("Search"));
-
-    }
-
-
-    @Test
-    public void testRefresh() {
-        Http.RequestBuilder request = Helpers.fakeRequest()
-                .method(GET)
-                .uri("/twitter/refresh");
-        Result result = route(app, request);
-        assertEquals(SEE_OTHER, result.status());
-    }
-
-
-    @Test
-    public void testSave() {
-        Http.RequestBuilder request = Helpers.fakeRequest()
-                .method(POST)
-                .bodyForm(ImmutableMap.of("hashtag", "WingCueng_Ray"))
-                .uri("/twitter/save");
-
-        Result result = route(app, request);
-        assertEquals(SEE_OTHER, result.status());
-
-
-        request = Helpers.fakeRequest()
-                .method(GET)
-                .uri("/twitter/getPage");
-        result = route(app, request);
-        assertEquals(SEE_OTHER, result.status());
-    }
+//    @Test
+//    public void testSave() {
+//        Http.RequestBuilder request = Helpers.fakeRequest()
+//                .method(POST)
+//                .bodyForm(ImmutableMap.of("hashtag", "WingCueng_Ray"))
+//                .uri("/twitter/save");
+//
+//        Result result = route(app, request);
+//        assertEquals(SEE_OTHER, result.status());
+//
+//
+//        request = Helpers.fakeRequest()
+//                .method(GET)
+//                .uri("/twitter/getPage");
+//        result = route(app, request);
+//        assertEquals(SEE_OTHER, result.status());
+//    }
 
 
     @Test
