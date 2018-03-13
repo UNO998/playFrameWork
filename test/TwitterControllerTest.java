@@ -6,6 +6,7 @@ import play.mvc.Result;
 import play.test.Helpers;
 import play.test.WithApplication;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static play.test.Helpers.*;
 
@@ -16,32 +17,32 @@ public class TwitterControllerTest extends WithApplication {
         return new GuiceApplicationBuilder().build();
     }
 
-//    @Test
-//    public void testGetPage() {
-//        Http.RequestBuilder request = Helpers.fakeRequest()
-//                .method(GET)
-//                .uri("/twitter/getPage");
-//
-//
-//        Result result = route(app, request);
-//
-//
-//        assertEquals(OK, result.status());
-//        assertTrue(Helpers.contentAsString(result).contains("Home"));
-//        assertTrue(Helpers.contentAsString(result).contains("Refresh"));
-//        //assertTrue(Helpers.contentAsString(result).contains("Search"));
-//
-//    }
+    @Test
+    public void testGetPage() {
+        Http.RequestBuilder request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/twitter/getPage");
 
 
-//    @Test
-//    public void testRefresh() {
-//        Http.RequestBuilder request = Helpers.fakeRequest()
-//                .method(GET)
-//                .uri("/twitter/refresh");
-//        Result result = route(app, request);
-//        assertEquals(SEE_OTHER, result.status());
-//    }
+        Result result = route(app, request);
+
+
+        assertEquals(OK, result.status());
+        assertTrue(Helpers.contentAsString(result).contains("Home"));
+        assertTrue(Helpers.contentAsString(result).contains("Refresh"));
+        //assertTrue(Helpers.contentAsString(result).contains("Search"));
+
+    }
+
+
+    @Test
+    public void testRefresh() {
+        Http.RequestBuilder request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/twitter/refresh");
+        Result result = route(app, request);
+        assertEquals(SEE_OTHER, result.status());
+    }
 
 
 //    @Test
