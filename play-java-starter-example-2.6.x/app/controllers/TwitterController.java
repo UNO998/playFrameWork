@@ -60,8 +60,9 @@ public class TwitterController extends Controller {
 
     public Result save(){
         Form<Twitter> TitterForm = formFactory.form(Twitter.class).bindFromRequest();
+        if (TitterForm.get().hashtag != null){
         Twitter twitter = TitterForm.get();
-        this.hashtag = twitter.hashtag;
+        this.hashtag = twitter.hashtag;}
         return redirect(routes.TwitterController.getPage());
     }
 
