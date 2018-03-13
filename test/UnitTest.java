@@ -1,15 +1,10 @@
-import akka.actor.ActorSystem;
-import controllers.AsyncController;
-import controllers.CountController;
+import models.Actor;
+import models.Twitter;
+import models.User;
+import org.junit.Before;
 import org.junit.Test;
-import play.mvc.Result;
-import scala.concurrent.ExecutionContextExecutor;
 
-import java.util.concurrent.CompletionStage;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
-import static play.test.Helpers.contentAsString;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Unit testing does not require Play application start up.
@@ -18,38 +13,37 @@ import static play.test.Helpers.contentAsString;
  */
 public class UnitTest {
 
-    @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a).isEqualTo(2);
+    private User user;
+    private Actor actor;
+    private Twitter twitter;
+
+    @Before
+    public void setup() {
+        user = new User("12345", "asdf", "zxcv", "qwer", "qwer1234", 123, 234, 345, "kkk");
+        actor = new Actor("name", user);
+        twitter = new Twitter("123");
     }
 
-    // Unit test a controller
     @Test
-    public void testCount() {
-        final CountController controller = new CountController(() -> 49);
-        Result result = controller.count();
-        assertThat(contentAsString(result)).isEqualTo("49");
+    public void testUser() {
+        assertEquals(user.getId(),"12345");
+        assertEquals(user.getName(),"asdf");
+        assertEquals(user.getScreen_name(),"zxcv");
+        assertEquals(user.getDescription(),"qwer");
+        assertEquals(user.getProfile_image_url(),"qwer1234");
+        assertEquals(user.getFollowers(),123);
+        assertEquals(user.getPosts(),234);
+        assertEquals(user.getFriends(),345);
     }
 
-    // Unit test a controller with async return
     @Test
-    public void testAsync() {
-        final ActorSystem actorSystem = ActorSystem.create("test");
-        try {
-            final ExecutionContextExecutor ec = actorSystem.dispatcher();
-            final AsyncController controller = new AsyncController(actorSystem, ec);
-            final CompletionStage<Result> future = controller.message();
-
-            // Block until the result is completed
-            await().until(() -> {
-                assertThat(future.toCompletableFuture()).isCompletedWithValueMatching(result -> {
-                    return contentAsString(result).equals("Hi!");
-                });
-            });
-        } finally {
-            actorSystem.terminate();
-        }
+    public void testActor() {
+        assertEquals(actor.getText(),"name");
+        assertEquals(actor.getUser(),user);
     }
 
+    @Test
+    public void testTwitter() {
+        assertEquals(twitter.hashtag,"123");
+    }
 }
