@@ -1,0 +1,82 @@
+import akka.actor.ActorSystem;
+import controllers.AsyncController;
+import controllers.CountController;
+import controllers.TwitterController;
+import org.junit.Test;
+import play.libs.concurrent.HttpExecutionContext;
+import play.libs.ws.WSClient;
+import play.libs.ws.WSRequest;
+import play.mvc.Result;
+import scala.concurrent.ExecutionContextExecutor;
+
+import java.io.IOException;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executor;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
+import static play.test.Helpers.contentAsString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static play.mvc.Http.Status.OK;
+import static play.test.Helpers.*;
+
+import org.junit.Test;
+
+import play.mvc.Result;
+import play.twirl.api.Content;
+
+import javax.xml.ws.http.HTTPException;
+
+/**
+ * Unit testing does not require Play application start up.
+ *
+ * https://www.playframework.com/documentation/latest/JavaTest
+ */
+public class UnitTest {
+
+    @Test
+    public void simpleCheck() {
+        int a = 1 + 1;
+        assertThat(a).isEqualTo(2);
+    }
+
+    // Unit test a controller
+    @Test
+    public void testCount() {
+        final CountController controller = new CountController(() -> 49);
+        Result result = controller.count();
+        assertThat(contentAsString(result)).isEqualTo("49");
+    }
+
+    // Unit test a controller with async return
+    @Test
+    public void testAsync() {
+        final ActorSystem actorSystem = ActorSystem.create("test");
+        try {
+            final ExecutionContextExecutor ec = actorSystem.dispatcher();
+            final AsyncController controller = new AsyncController(actorSystem, ec);
+            final CompletionStage<Result> future = controller.message();
+
+            // Block until the result is completed
+            await().until(() -> {
+                assertThat(future.toCompletableFuture()).isCompletedWithValueMatching(result -> {
+                    return contentAsString(result).equals("Hi!");
+                });
+            });
+        } finally {
+            actorSystem.terminate();
+        }
+    }
+
+    //Test refresh
+    @Test
+    public void testIndex() {
+        Result result = new TwitterController().refresh();
+        assertEquals(OK, result.status());
+        assertEquals("text/html", result.contentType().get());
+        assertEquals("utf-8", result.charset().get());
+        assertTrue(contentAsString(result).contains("Welcome"));
+    }
+
+}
