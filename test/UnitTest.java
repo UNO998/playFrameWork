@@ -1,51 +1,49 @@
-///**
-// * Unit testing does not require Play application start up.
-// *
-// * https://www.playframework.com/documentation/latest/JavaTest
-// */
-//public class UnitTest {
-//
-////    @Test
-////    public void simpleCheck() {
-////        int a = 1 + 1;
-////        assertThat(a).isEqualTo(2);
-////    }
-////
-////    // Unit test a controller
-////    @Test
-////    public void testCount() {
-////        final CountController controller = new CountController(() -> 49);
-////        Result result = controller.count();
-////        assertThat(contentAsString(result)).isEqualTo("49");
-////    }
-////
-////    // Unit test a controller with async return
-////    @Test
-////    public void testAsync() {
-////        final ActorSystem actorSystem = ActorSystem.create("test");
-////        try {
-////            final ExecutionContextExecutor ec = actorSystem.dispatcher();
-////            final AsyncController controller = new AsyncController(actorSystem, ec);
-////            final CompletionStage<Result> future = controller.message();
-////
-////            // Block until the result is completed
-////            await().until(() -> {
-////                assertThat(future.toCompletableFuture()).isCompletedWithValueMatching(result -> {
-////                    return contentAsString(result).equals("Hi!");
-////                });
-////            });
-////        } finally {
-////            actorSystem.terminate();
-////        }
-////    }
-//
-////    //Test refresh
-////    @Test
-////    public void testIndex() {
-////        Result result = new TwitterController().refresh();
-////        assertEquals(OK, result.status());
-////        assertEquals("text/html", result.contentType().get());
-////        assertEquals("utf-8", result.charset().get());
-////        assertTrue(contentAsString(result).contains("Welcome"));
-////    }
-//}
+import models.Actor;
+import models.Twitter;
+import models.User;
+import org.junit.Before;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+
+/**
+ * Unit testing does not require Play application start up.
+ *
+ * https://www.playframework.com/documentation/latest/JavaTest
+ */
+public class UnitTest {
+
+    private User user;
+    private Actor actor;
+    private Twitter twitter;
+
+    @Before
+    public void setup() {
+        user = new User("12345", "asdf", "zxcv", "qwer", "qwer1234", 123, 234, 345, "kkk");
+        actor = new Actor("name", user);
+        twitter = new Twitter("123");
+    }
+
+    @Test
+    public void testUser() {
+        assertEquals(user.getId(),"12345");
+        assertEquals(user.getName(),"asdf");
+        assertEquals(user.getScreen_name(),"zxcv");
+        assertEquals(user.getDescription(),"qwer");
+        assertEquals(user.getProfile_image_url(),"qwer1234");
+        assertEquals(user.getFollowers(),123);
+        assertEquals(user.getPosts(),234);
+        assertEquals(user.getFriends(),345);
+    }
+
+    @Test
+    public void testActor() {
+        assertEquals(actor.getText(),"name");
+        assertEquals(actor.getUser(),user);
+    }
+
+    @Test
+    public void testTwitter() {
+        assertEquals(twitter.hashtag,"123");
+    }
+}

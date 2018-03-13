@@ -1,3 +1,4 @@
+import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
@@ -45,23 +46,23 @@ public class TwitterControllerTest extends WithApplication {
     }
 
 
-//    @Test
-//    public void testSave() {
-//        Http.RequestBuilder request = Helpers.fakeRequest()
-//                .method(POST)
-//                .bodyForm(ImmutableMap.of("hashtag", "WingCueng_Ray"))
-//                .uri("/twitter/save");
-//
-//        Result result = route(app, request);
-//        assertEquals(SEE_OTHER, result.status());
-//
-//
-//        request = Helpers.fakeRequest()
-//                .method(GET)
-//                .uri("/twitter/getPage");
-//        result = route(app, request);
-//        assertEquals(SEE_OTHER, result.status());
-//    }
+    @Test
+    public void testSave() {
+        Http.RequestBuilder request = Helpers.fakeRequest()
+                .method(POST)
+                .bodyForm(ImmutableMap.of("hashtag", "WingCueng_Ray"))
+                .uri("/twitter/save");
+
+        Result result = route(app, request);
+        assertEquals(NOT_FOUND, result.status());
+
+
+        request = Helpers.fakeRequest()
+                .method(GET)
+                .uri("/twitter/getPage");
+        result = route(app, request);
+        assertEquals(OK, result.status());
+    }
 
 
     @Test
@@ -72,8 +73,8 @@ public class TwitterControllerTest extends WithApplication {
 
         Result result = route(app, request);
         assertEquals(SEE_OTHER, result.status());
-        //assertTrue(Helpers.contentAsString(result).contains("test 31111!"));
-        //assertTrue(Helpers.contentAsString(result).contains("hello world"));
+//        assertTrue(Helpers.contentAsString(result).contains("test 31111!"));
+//        assertTrue(Helpers.contentAsString(result).contains("hello world"));
     }
 
 

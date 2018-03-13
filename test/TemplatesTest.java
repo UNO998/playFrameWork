@@ -20,6 +20,7 @@ public class TemplatesTest extends WithBrowser {
 //    public void configure(Binder binder){
 //
 //    }
+
     @Test
     public void userTemplateTest() {
         User mockedUser = mock(User.class);
@@ -31,11 +32,12 @@ public class TemplatesTest extends WithBrowser {
 //    @Test
 //    public void textTemplateTest(){
 //
-//        Form<Twitter> form = formFactory.form(Twitter.class);
+//        Form<Twitter> form = formFactory.form(Twitter.class).bindFromRequest();
 //
 //        List<Actor> mockedActor = mock(List.class);
+//        Form<Twitter> mockedForm = mock(Form.class);
 //
-//        Content html = views.html.text.render(mockedActor ,form);
+//        Content html = views.html.text.render(mockedActor ,mockedForm);
 //        assertEquals("text/html", html.contentType());
 //    }
 
