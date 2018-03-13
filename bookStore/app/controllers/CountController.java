@@ -22,7 +22,7 @@ public class CountController extends Controller {
     public CountController(Counter counter) {
        this.counter = counter;
     }
-
+// ...
     /**
      * An action that responds with the {@link Counter}'s current
      * count. The result is plain text. This action is mapped to
