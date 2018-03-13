@@ -1,23 +1,24 @@
 //import models.Actor;
-//        import models.Twitter;
-//        import models.User;
-//        import org.junit.Test;
-//        import play.data.Form;
-//        import play.data.FormFactory;
-//        import play.libs.concurrent.HttpExecutionContext;
-//        import play.libs.oauth.OAuth;
-//        import play.libs.ws.WSClient;
-//        import play.mvc.Result;
+//import models.Twitter;
+//import models.User;
+//import org.junit.Before;
+//import org.junit.Test;
+//import play.data.Form;
+//import play.data.FormFactory;
+//import play.libs.concurrent.HttpExecutionContext;
+//import play.libs.oauth.OAuth;
+//import play.libs.ws.WSClient;
+//import play.mvc.Result;
 //
-//        import javax.inject.Inject;
-//        import java.util.HashMap;
-//        import java.util.LinkedList;
-//        import java.util.List;
-//        import java.util.Map;
+//import javax.inject.Inject;
+//import java.util.HashMap;
+//import java.util.LinkedList;
+//import java.util.List;
+//import java.util.Map;
 //
-//        import static org.junit.Assert.assertEquals;
-//        import static play.mvc.Http.Status.OK;
-//        import static play.mvc.Results.redirect;
+//import static org.junit.Assert.assertEquals;
+//import static play.mvc.Http.Status.OK;
+//import static play.mvc.Results.redirect;
 //
 //
 //public class ControllerTest {
@@ -42,9 +43,9 @@
 //    public List<Actor> actors = new LinkedList<>();
 //    public Map<String, User> users = new HashMap<>();
 //
-////    @Before
-////    public void startApp() {
-////    }
+//    @Before
+//    public void startApp() {
+//    }
 //
 //    //Test save
 //    @Test
