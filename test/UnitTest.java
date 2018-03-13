@@ -52,4 +52,13 @@ public class UnitTest {
         }
     }
 
+//    //Test refresh
+//    @Test
+//    public void testIndex() {
+//        Result result = new TwitterController().refresh();
+//        assertEquals(OK, result.status());
+//        assertEquals("text/html", result.contentType().get());
+//        assertEquals("utf-8", result.charset().get());
+//        assertTrue(contentAsString(result).contains("Welcome"));
+//    }
 }
