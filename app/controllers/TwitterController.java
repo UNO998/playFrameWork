@@ -25,7 +25,11 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-
+/**
+ * This controller contains multiple actions including
+ * listing 10 tweets searched by keywords
+ * and showing the user's profile.
+ */
 public class TwitterController extends Controller {
     private HttpExecutionContext httpExecutionContext;
 
@@ -47,13 +51,22 @@ public class TwitterController extends Controller {
     private String strUrl = "https://api.twitter.com/1.1/search/tweets.json?q=%20";
     List<Actor> actors = new LinkedList<>();
     Map<String, User> users = new HashMap<>();
+
+    /**
+     * Constuctor
+     * @param ws a WSClient object to provide asynchronous requests
+     * @param ec a HttpExecutionContext object as an excutor
+     */
     @Inject
     public TwitterController(WSClient ws, HttpExecutionContext ec) {
         this.ws = ws;
         this.httpExecutionContext = ec;
     }
 
-
+    /**
+     *Save the keyword and redirect to the related page
+     * @return Return a redirect response
+     */
     public Result save(){
         Form<Twitter> TitterForm = formFactory.form(Twitter.class).bindFromRequest();
         Twitter twitter = TitterForm.get();
@@ -61,6 +74,11 @@ public class TwitterController extends Controller {
         return redirect(routes.TwitterController.homeTimeline());
     }
 
+    /**
+     * Direct to the result page or main page according to the input keyword.
+     * @return Rendered result page
+     * @throws Exception Throw the Exception
+     */
     public Result getPage() throws Exception{
         Form<Twitter> twitterForm = formFactory.form(Twitter.class);
         if (this.hashtag.length() == 0) {
@@ -68,6 +86,12 @@ public class TwitterController extends Controller {
         }else return homeTimeline().toCompletableFuture().get();
     }
 
+    /**
+     * Get the user's profile and recent 10 tweets by userID
+     * @param id userID
+     * @return If token is valid, return HTTPOK response and rendered web page about user's profile and 10 recent tweets.
+     * Otherwise, return a redirect response to auth page to get authorization.
+     */
     public CompletionStage<Result> userInfo(String id) {
         List<String> texts = new LinkedList<>();
         Optional<RequestToken> sessionTokenPair = getSessionTokenPair();
@@ -91,7 +115,11 @@ public class TwitterController extends Controller {
         return CompletableFuture.completedFuture(redirect(routes.TwitterController.auth()));
     }
 
-
+    /**
+     * Get 10 tweets by keyword
+     * @return If token is valid, return HTTPOK response and rendered result page
+     * Otherwise, return a redirect response to auth page to get authorization.
+     */
     public CompletionStage<Result> homeTimeline() {
         Form<Twitter> twitterForm = formFactory.form(Twitter.class);
         String url = strUrl + this.hashtag;
@@ -130,6 +158,11 @@ public class TwitterController extends Controller {
         return CompletableFuture.completedFuture(redirect(routes.TwitterController.auth()));
     }
 
+    /**
+     * Get authorization
+     * @return a redirect response to the next related page if the token is valid.
+     * Otherwise return a redirect response to token-related page
+     */
     public Result auth() {
         String verifier = request().getQueryString("oauth_verifier");
         if (Strings.isNullOrEmpty(verifier)) {
@@ -146,12 +179,21 @@ public class TwitterController extends Controller {
         }
     }
 
+    /**
+     * Save token information
+     * @param requestToken token information
+     */
     private void saveSessionTokenPair(RequestToken requestToken) {
         System.out.println(requestToken.token);
         session("token", requestToken.token);
         session("secret", requestToken.secret);
     }
 
+    /**
+     * Get tokenpair
+     * @return A Optiional object if session contains token
+     *Otherwise, return a empty Optional object
+     */
     private Optional<RequestToken> getSessionTokenPair() {
         if (session().containsKey("token")) {
             return Optional.ofNullable(new RequestToken(session("token"), session("secret")));
