@@ -7,6 +7,8 @@
 - [Play Framework](https://www.playframework.com/)
 - Java 8
 - [Twitter API](https://developer.twitter.com)
+- Test Tool : [Jacoco](https://github.com/sbt/sbt-jacoco)
+- [2](#test)
 
 ## Project guidelines
 - Based on **Play FrameWork** 
@@ -24,3 +26,5 @@
 
 ## Project Requirement link :
 [project requirement1](./project-require1.pdf)
+
+## test
