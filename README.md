@@ -8,7 +8,7 @@
 - Java 8
 - [Twitter API](https://developer.twitter.com)
 - Test Tool : [Jacoco](https://github.com/sbt/sbt-jacoco)
-- [2](#project&#32requirement&#32link)
+- [2](#project&#32requirement&#32link&#32:)
 
 ## Project guidelines
 - Based on **Play FrameWork** 
